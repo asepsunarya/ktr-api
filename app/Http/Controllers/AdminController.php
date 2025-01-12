@@ -39,10 +39,13 @@ class AdminController extends Controller
     public function update(AdminRequest $request, $id)
     {
         $admin = Admin::findOrFail($id);
-        $admin->update([
+        $data = [
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        ];
+        if ($request->password) {
+            $data['password'] = Hash::make($request->password);
+        }
+        $admin->update($data);
 
         return response()->json([
             'message' => 'Admin updated successfully',
