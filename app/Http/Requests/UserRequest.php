@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class SettingRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     public function authorize()
     {
@@ -16,8 +16,11 @@ class SettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => 'required|string',
-            'value' => 'required|string',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'ktp' => 'required|string|max:16',
+            'phone' => 'required|string|max:14',
+            'password' => 'required|string|min:6',
         ];
     }
 

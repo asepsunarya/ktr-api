@@ -12,6 +12,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('ktr_request_id');
             $table->integer('total_cost');
+            $table->string('payment_id');
             $table->string('status');
             $table->timestamps();
         });

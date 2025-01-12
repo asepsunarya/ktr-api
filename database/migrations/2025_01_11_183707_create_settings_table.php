@@ -10,10 +10,8 @@ class CreateSettingsTable extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->text('service_flow');
-            $table->text('terms_and_conditions');
-            $table->string('time_period');
-            $table->string('cost');
+            $table->string('key')->unique();
+            $table->text('value');
             $table->timestamps();
         });
     }

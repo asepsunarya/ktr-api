@@ -10,9 +10,7 @@ class Setting extends Model
     use HasFactory;
 
     protected $fillable = [
-        'service_flow',
-        'terms_and_conditions',
-        'time_period',
-        'cost',
+        'key',
+        'value',
     ];
 }

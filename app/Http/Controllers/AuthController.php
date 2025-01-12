@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LoginAdminRequest;
 use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
@@ -27,6 +29,29 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Login berhasil',
                 'user' => $user
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Email atau password salah',
+        ], 401);
+    }
+
+    /**
+     * Handle login request.
+     */
+    public function loginAdmin(LoginAdminRequest $request)
+    {
+        // Ambil admin berdasarkan email
+        $admin = Admin::where('email', $request->email)->first();
+
+        // Cek apakah admin ditemukan dan password cocok
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            // Berhasil login
+            Auth::login($admin); // Login admin ke session
+            return response()->json([
+                'message' => 'Login berhasil',
+                'admin' => $admin
             ]);
         }
 

@@ -12,6 +12,7 @@ class Payment extends Model
     protected $fillable = [
         'ktr_request_id',
         'total_cost',
+        'payment_id',
         'status',
     ];
 }

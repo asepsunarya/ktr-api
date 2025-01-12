@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KtrRequestController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return 'api';
@@ -12,6 +14,7 @@ Route::get('/', function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login/admin', [AuthController::class, 'loginAdmin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::prefix('ktr-requests')->group(function () {
@@ -36,6 +39,22 @@ Route::prefix('settings')->group(function () {
     Route::get('/{id}', [SettingController::class, 'show']);
     Route::put('/{id}', [SettingController::class, 'update']);
     Route::delete('/{id}', [SettingController::class, 'destroy']);
+});
+
+Route::prefix('users')->group(function () {
+    Route::post('/', [UserController::class, 'store']);
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::put('/{id}', [UserController::class, 'update']);
+    Route::delete('/{id}', [UserController::class, 'destroy']);
+});
+
+Route::prefix('admins')->group(function () {
+    Route::post('/', [AdminController::class, 'store']);
+    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/{id}', [AdminController::class, 'show']);
+    Route::put('/{id}', [AdminController::class, 'update']);
+    Route::delete('/{id}', [AdminController::class, 'destroy']);
 });
 
 
