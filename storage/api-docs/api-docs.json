@@ -39,6 +39,33 @@
                 }
             }
         },
+        "/api/ktr-requests/{id}": {
+            "get": {
+                "summary": "Ambil Detail Permohonan",
+                "operationId": "060e79afe322d38e8c433acc619a34e3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "KTR Request ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/payments/user/{userId}": {
             "get": {
                 "summary": "Ambil List Pembayaran",

@@ -65,6 +65,21 @@ class KtrRequestController extends Controller
         return response()->json($ktrRequests);
     }
 
+/**
+     * @OA\Get(
+     *     path="/api/ktr-requests/{id}",
+     *     summary="Ambil Detail Permohonan",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="KTR Request ID",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
     public function show($id)
     {
         $ktrRequest = KtrRequest::with('user')->findOrFail($id);
