@@ -39,6 +39,60 @@
                 }
             }
         },
+        "/api/payments/user/{userId}": {
+            "get": {
+                "summary": "Ambil List Pembayaran",
+                "operationId": "66693c6ed598a2962fbf3097e8b5d833",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/payments/user/{userId}/stats": {
+            "get": {
+                "summary": "Ambil Statistik Pembayaran",
+                "operationId": "c4065fcd4a149a28f741c25e6cb18363",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/register": {
             "post": {
                 "summary": "Register a new user",

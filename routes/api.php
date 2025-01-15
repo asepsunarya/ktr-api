@@ -36,6 +36,7 @@ Route::prefix('payments')->group(function () {
     Route::delete('/{id}', [PaymentController::class, 'destroy']);
     Route::get('/user/{userId}', [PaymentController::class, 'getByUserId']);
     Route::post('/{id}/verify', [PaymentController::class, 'verifyPayment']);
+    Route::get('/user/{userId}/stats', [PaymentController::class, 'getPaymentStatsByUserId']);
 });
 
 Route::prefix('settings')->group(function () {

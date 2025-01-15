@@ -53,7 +53,21 @@ class PaymentController extends Controller
             'message' => 'Pembayaran berhasil dihapus'
         ]);
     }
-
+/**
+     * @OA\Get(
+     *     path="/api/payments/user/{userId}",
+     *     summary="Ambil List Pembayaran",
+     *     @OA\Parameter(
+     *         name="userId",
+     *         in="path",
+     *         description="User ID",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
     public function getByUserId($userId)
     {
         $payments = Payment::with('ktrRequest')->whereHas('ktrRequest', function ($query) use ($userId) {
@@ -90,6 +104,47 @@ class PaymentController extends Controller
             'message' => 'Pembayaran berhasil diverifikasi',
             'payment' => $payment,
             'ktrRequest' => $ktrRequest,
+        ]);
+    }
+
+/**
+     * @OA\Get(
+     *     path="/api/payments/user/{userId}/stats",
+     *     summary="Ambil Statistik Pembayaran",
+     *     @OA\Parameter(
+     *         name="userId",
+     *         in="path",
+     *         description="User ID",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function getPaymentStatsByUserId($userId)
+    {
+        $totalPayments = Payment::whereHas('ktrRequest', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->count();
+
+        $paidPayments = Payment::whereHas('ktrRequest', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->where('status', 'paid')->count();
+
+        $pendingPayments = Payment::whereHas('ktrRequest', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->where('status', 'pending')->count();
+
+        $failedPayments = Payment::whereHas('ktrRequest', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->where('status', 'failed')->count();
+
+        return response()->json([
+            'total_payments' => $totalPayments,
+            'paid_payments' => $paidPayments,
+            'pending_payments' => $pendingPayments,
+            'failed_payments' => $failedPayments,
         ]);
     }
 }
