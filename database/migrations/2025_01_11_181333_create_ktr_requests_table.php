@@ -10,7 +10,7 @@ class CreateKtrRequestsTable extends Migration
     {
         Schema::create('ktr_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('job');
             $table->string('address');
             $table->string('act_as');
@@ -21,14 +21,16 @@ class CreateKtrRequestsTable extends Migration
             $table->string('land_area');
             $table->string('land_status');
             $table->string('purpose');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->string('ktp_file');
             $table->string('land_document');
             $table->string('activity_location');
-            $table->string('sign');
+            $table->text('sign')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

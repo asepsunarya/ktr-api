@@ -14,6 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            ProvinceSeeder::class,
+            RegencySeeder::class,
+            DistrictSeeder::class,
+            SubdistrictSeeder::class,
+        ]);
+
         // User::factory(10)->create();
 
         Admin::factory()->create([
@@ -33,13 +40,11 @@ class DatabaseSeeder extends Seeder
 
         Setting::factory()->create([
             'key' => 'terms_and_conditions',
-            'value' => '1. Surat Permohonan Keterangan Tata Ruang yang
-ditujukan kepada Kepala Dinas Pekerjaan Umum dan
-Tata Ruang Kabupaten Cianjur&nbsp;
-2. Fotokopi KTP/surat identitas lainnya&nbsp;
-3. Fotokopi surat tanah&nbsp;
-4.Gambar situasi/letak tanah/Koordinat;&nbsp;
-5.Nomor kontak pemohon.',
+            'value' => '1. Surat Permohonan Keterangan Tata Ruang yang ditujukan kepada Kepala Dinas Pekerjaan Umum dan Tata Ruang Kabupaten Cianjur
+2. Fotokopi KTP/surat identitas lainnya
+3. Fotokopi surat tanah
+4.Gambar situasi/letak tanah/Koordinat
+5.Nomor kontak pemohon',
         ]);
 
         Setting::factory()->create([

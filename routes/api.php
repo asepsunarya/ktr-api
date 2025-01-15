@@ -7,6 +7,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LocationController;
 
 Route::get('/', function () {
     return 'api';
@@ -23,6 +24,8 @@ Route::prefix('ktr-requests')->group(function () {
     Route::get('/{id}', [KtrRequestController::class, 'show']);
     Route::put('/{id}', [KtrRequestController::class, 'update']);
     Route::delete('/{id}', [KtrRequestController::class, 'destroy']);
+    Route::get('/user/{userId}', [KtrRequestController::class, 'getByUserId']);
+    Route::get('/user/{userId}/stats', [KtrRequestController::class, 'getRequestStatsByUserId']); // New route
 });
 
 Route::prefix('payments')->group(function () {
@@ -31,6 +34,8 @@ Route::prefix('payments')->group(function () {
     Route::get('/{id}', [PaymentController::class, 'show']);
     Route::put('/{id}', [PaymentController::class, 'update']);
     Route::delete('/{id}', [PaymentController::class, 'destroy']);
+    Route::get('/user/{userId}', [PaymentController::class, 'getByUserId']);
+    Route::post('/{id}/verify', [PaymentController::class, 'verifyPayment']);
 });
 
 Route::prefix('settings')->group(function () {
@@ -56,5 +61,10 @@ Route::prefix('admins')->group(function () {
     Route::put('/{id}', [AdminController::class, 'update']);
     Route::delete('/{id}', [AdminController::class, 'destroy']);
 });
+
+Route::get('/provinces', [LocationController::class, 'getProvinces']);
+Route::get('/regencies/{province_id}', [LocationController::class, 'getRegenciesByProvince']);
+Route::get('/districts/{regency_id}', [LocationController::class, 'getDistrictsByRegency']);
+Route::get('/subdistricts/{district_id}', [LocationController::class, 'getSubdistrictsByDistrict']);
 
 

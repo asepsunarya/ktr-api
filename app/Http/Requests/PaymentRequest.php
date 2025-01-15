@@ -16,8 +16,9 @@ class PaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'ktr_request_id' => 'required|string',
+            'ktr_request_id' => 'required|exists:ktr_requests,id',
             'total_cost' => 'required|integer',
+            'payment_id' => 'required|string',
             'status' => 'required|string',
         ];
     }

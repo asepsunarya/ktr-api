@@ -15,20 +15,42 @@ use App\Http\Requests\RegisterRequest;
 class AuthController extends Controller
 {
     /**
-     * Handle login request.
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Otentikasi user untuk mendapatkan token",
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="Email user",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="Password user",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Login berhasil"),
+     *     @OA\Response(response="401", description="Email atau password salah")
+     * )
      */
     public function login(LoginRequest $request)
     {
+        return 'Hello, World!';
         // Ambil user berdasarkan email
         $user = User::where('email', $request->email)->first();
 
         // Cek apakah user ditemukan dan password cocok
-        if ($user && Hash::check($request->password, $user->password)) {
+        $credentials = $request->only('email', 'password');
+        if ($user && Auth::attempt($credentials)) {
             // Berhasil login
-            Auth::login($user); // Login user ke session
+            $token = Auth::user()->createToken('api_token')->plainTextToken;
             return response()->json([
                 'message' => 'Login berhasil',
-                'user' => $user
+                'user' => $user,
+                'token' => $token
             ]);
         }
 

@@ -27,6 +27,10 @@ class KtrRequest extends Model
         'land_document',
         'activity_location',
         'sign',
-        'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

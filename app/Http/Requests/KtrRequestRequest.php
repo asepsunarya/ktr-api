@@ -16,7 +16,7 @@ class KtrRequestRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|string',
+            'user_id' => 'required|exists:users,id',
             'job' => 'required|string',
             'address' => 'required|string',
             'act_as' => 'required|string',
@@ -27,12 +27,12 @@ class KtrRequestRequest extends FormRequest
             'land_area' => 'required|string',
             'land_status' => 'required|string',
             'purpose' => 'required|string',
-            'latitude' => 'required|string',
-            'longitude' => 'required|string',
-            'ktp_file' => 'required|string',
-            'land_document' => 'required|string',
-            'activity_location' => 'required|string',
-            'sign' => 'required|string',
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
+            'ktp_file' => 'required|file|mimes:pdf,jpg,jpeg,png',
+            'land_document' => 'required|file|mimes:pdf,jpg,jpeg,png',
+            'activity_location' => 'required|file|mimes:pdf,jpg,jpeg,png',
+            'sign' => 'nullable|string',
         ];
     }
 

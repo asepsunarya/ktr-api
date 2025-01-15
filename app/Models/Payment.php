@@ -15,4 +15,9 @@ class Payment extends Model
         'payment_id',
         'status',
     ];
+
+    public function ktrRequest()
+    {
+        return $this->belongsTo(KtrRequest::class);
+    }
 }
