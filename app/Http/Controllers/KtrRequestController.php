@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KtrRequestRequest;
+use App\Http\Requests\UpdateKtrRequest;
 use App\Models\KtrRequest;
 use App\Models\Payment;
 use App\Models\Setting;
@@ -95,10 +96,16 @@ class KtrRequestController extends Controller
         return response()->json($ktrRequest);
     }
 
-    public function update(KtrRequestRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $ktrRequest = KtrRequest::findOrFail($id);
-        $ktrRequest->update($request->validated());
+
+        // Validasi input yang diberikan
+        $validatedData = $request->validated();
+
+        // Hanya memperbarui field yang diberikan dalam permintaan
+        $ktrRequest->fill($validatedData);
+        $ktrRequest->save();
 
         return response()->json([
             'message' => 'Permohonan KTR berhasil diperbarui',
