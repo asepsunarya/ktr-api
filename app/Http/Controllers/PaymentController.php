@@ -21,7 +21,7 @@ class PaymentController extends Controller
 
     public function index()
     {
-        $payments = Payment::with('ktrRequest')->get();
+        $payments = Payment::with('ktrRequest.user')->get();
 
         return response()->json($payments);
     }
@@ -70,7 +70,7 @@ class PaymentController extends Controller
      */
     public function getByUserId($userId)
     {
-        $payments = Payment::with('ktrRequest')->whereHas('ktrRequest', function ($query) use ($userId) {
+        $payments = Payment::with('ktrRequest.user')->whereHas('ktrRequest', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->get();
 
@@ -139,6 +139,32 @@ class PaymentController extends Controller
         $failedPayments = Payment::whereHas('ktrRequest', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->where('status', 'failed')->count();
+
+        return response()->json([
+            'total_payments' => $totalPayments,
+            'paid_payments' => $paidPayments,
+            'pending_payments' => $pendingPayments,
+            'failed_payments' => $failedPayments,
+        ]);
+    }
+
+/**
+     * @OA\Get(
+     *     path="/api/payments/admin/stats",
+     *     summary="Ambil Statistik Pembayaran",
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function getPaymentStats()
+    {
+        $totalPayments = Payment::count();
+
+        $paidPayments = Payment::where('status', 'paid')->count();
+
+        $pendingPayments = Payment::where('status', 'pending')->count();
+
+        $failedPayments = Payment::where('status', 'failed')->count();
 
         return response()->json([
             'total_payments' => $totalPayments,
