@@ -25,7 +25,9 @@ Route::prefix('ktr-requests')->group(function () {
     Route::put('/{id}', [KtrRequestController::class, 'update']);
     Route::delete('/{id}', [KtrRequestController::class, 'destroy']);
     Route::get('/user/{userId}', [KtrRequestController::class, 'getByUserId']);
-    Route::get('/user/{userId}/stats', [KtrRequestController::class, 'getRequestStatsByUserId']); // New route
+    Route::get('/user/{userId}/stats', [KtrRequestController::class, 'getRequestStatsByUserId']);
+    Route::get('/admin/stats', [KtrRequestController::class, 'getRequestStats']);
+    Route::put('/{id}/status', [KtrRequestController::class, 'updateStatus']);
 });
 
 Route::prefix('payments')->group(function () {

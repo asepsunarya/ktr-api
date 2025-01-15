@@ -39,6 +39,22 @@
                 }
             }
         },
+        "/api/ktr-requests": {
+            "get": {
+                "summary": "Ambil List Permohonan Admin",
+                "operationId": "9be64fcd7239bc7b38ea73d01d1c14a2",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/ktr-requests/{id}": {
             "get": {
                 "summary": "Ambil Detail Permohonan",
@@ -54,6 +70,38 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/ktr-requests/user/{user_id}/stats": {
+            "get": {
+                "summary": "Ambil Statistik Permohonan User",
+                "operationId": "fb46d3ce39d1fe9b57945cfa6bc00adf",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/ktr-requests/admin/stats": {
+            "get": {
+                "summary": "Ambil Statistik Permohonan Admin",
+                "operationId": "8402c228768b8a1bdcc54f5a92c4fd11",
                 "responses": {
                     "200": {
                         "description": "Success"

@@ -58,6 +58,14 @@ class KtrRequestController extends Controller
         ]);
     }
 
+/**
+     * @OA\Get(
+     *     path="/api/ktr-requests",
+     *     summary="Ambil List Permohonan Admin",
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
     public function index()
     {
         $ktrRequests = KtrRequest::with('user')->get();
@@ -82,7 +90,7 @@ class KtrRequestController extends Controller
      */
     public function show($id)
     {
-        $ktrRequest = KtrRequest::with('user')->findOrFail($id);
+        $ktrRequest = KtrRequest::with('user')->with('regency')->with('district')->with('subdistrict')->findOrFail($id);
 
         return response()->json($ktrRequest);
     }
@@ -114,7 +122,14 @@ class KtrRequestController extends Controller
 
         return response()->json($ktrRequests);
     }
-
+/**
+     * @OA\Get(
+     *     path="/api/ktr-requests/user/{user_id}/stats",
+     *     summary="Ambil Statistik Permohonan User",
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
     public function getRequestStatsByUserId($userId)
     {
         $totalRequests = KtrRequest::where('user_id', $userId)->count();
@@ -127,6 +142,46 @@ class KtrRequestController extends Controller
             'approved_requests' => $approvedRequests,
             'rejected_requests' => $rejectedRequests,
             'pending_requests' => $pendingRequests,
+        ]);
+    }
+
+/**
+     * @OA\Get(
+     *     path="/api/ktr-requests/admin/stats",
+     *     summary="Ambil Statistik Permohonan Admin",
+     *     @OA\Response(response="200", description="Success"),
+     *     security={{"bearerAuth":{}}}
+     * )
+     */
+    public function getRequestStats()
+    {
+        $totalRequests = KtrRequest::count();
+        $approvedRequests = KtrRequest::where('status', 'approved')->count();
+        $rejectedRequests = KtrRequest::where('status', 'rejected')->count();
+        $pendingRequests = KtrRequest::where('status', 'pending')->count();
+
+        return response()->json([
+            'total_requests' => $totalRequests,
+            'approved_requests' => $approvedRequests,
+            'rejected_requests' => $rejectedRequests,
+            'pending_requests' => $pendingRequests,
+        ]);
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|in:pending,approved,rejected',
+        ]);
+
+        $ktrRequest = KtrRequest::findOrFail($id);
+        $ktrRequest->update([
+            'status' => $request->status,
+        ]);
+
+        return response()->json([
+            'message' => 'Status permohonan KTR berhasil diperbarui',
+            'ktrRequest' => $ktrRequest,
         ]);
     }
 }
