@@ -13,7 +13,7 @@ class SubdistrictSeeder extends Seeder
         $json = File::get("public/json/subdistricts.json");
         $data = json_decode($json, true);
 
-        $chunks = array_chunk($data, 10000);
+        $chunks = array_chunk($data, 5000);
 
         foreach ($chunks as $chunk) {
             Subdistrict::insert($chunk);
