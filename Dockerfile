@@ -37,6 +37,9 @@ COPY . /var/www/html
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
 
+# Install Laravel dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
 # Change current user to www
 USER www-data
 
