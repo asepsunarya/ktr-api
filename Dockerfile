@@ -43,6 +43,8 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 # Change current user to www
 USER www-data
 
-# Expose port 8000 and start php-fpm server
-EXPOSE 8000
+# Expose port 9000 for php-fpm
+EXPOSE 9000
+
+# Start php-fpm server
 CMD ["php-fpm"]
