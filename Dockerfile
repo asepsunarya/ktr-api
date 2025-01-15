@@ -31,8 +31,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy composer files
-COPY composer.json composer.lock /var/www/html/
+# Copy existing application directory contents
+COPY . /var/www/html
 
 # Set ownership and permissions
 RUN chown -R www-data:www-data /var/www/html
@@ -40,15 +40,6 @@ RUN chown -R www-data:www-data /var/www/html
 # Install Laravel dependencies
 USER www-data
 RUN composer install --no-interaction --optimize-autoloader --no-dev
-
-# Copy existing application directory contents
-COPY . /var/www/html
-
-# Copy existing application directory permissions
-COPY --chown=www-data:www-data . /var/www/html
-
-# Change current user to www
-USER www-data
 
 # Expose port 9000 for php-fpm
 EXPOSE 9000
