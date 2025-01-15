@@ -38,7 +38,6 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        return 'Hello, World!';
         // Ambil user berdasarkan email
         $user = User::where('email', $request->email)->first();
 

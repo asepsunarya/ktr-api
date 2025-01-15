@@ -10,7 +10,6 @@ class EnsureJsonResponse
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        return "Hello, World!";
         if ($response->status() === 401 && $request->expectsJson()) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
