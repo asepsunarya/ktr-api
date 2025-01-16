@@ -34,12 +34,8 @@ WORKDIR /var/www/html
 # Copy existing application directory contents
 COPY . /var/www/html
 
-# Set ownership and permissions
-RUN chown -R www-data:www-data /var/www/html
-
 # Install Laravel dependencies
 USER www-data
-RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 # Expose port 9000 for php-fpm
 EXPOSE 9000
