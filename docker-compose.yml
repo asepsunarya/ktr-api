@@ -50,8 +50,6 @@ services:
       - app
     networks:
       - laravel
-    extra_hosts:
-      - "api.asepsunarya.space:10.32.194.6"
 
 networks:
   laravel:
