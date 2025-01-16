@@ -25,6 +25,8 @@ services:
       - db
     networks:
       - laravel
+    extra_hosts:
+    - "api.asepsunarya.space:127.0.0.1"
   db:
     image: mysql:latest
     ports:
@@ -50,6 +52,8 @@ services:
       - app
     networks:
       - laravel
+    extra_hosts:
+      - "api.asepsunarya.space:127.0.0.1"
 
 networks:
   laravel:
