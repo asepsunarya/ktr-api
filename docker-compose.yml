@@ -51,7 +51,7 @@ services:
     networks:
       - laravel
     extra_hosts:
-      - "api.asepsunarya.space:127.0.0.1"
+      - "api.asepsunarya.space:host.docker.internal"
 
 networks:
   laravel:
